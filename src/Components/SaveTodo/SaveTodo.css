@@ -1,0 +1,18 @@
+.container-register-todo {
+  margin: 20px;
+  padding: 20px;
+  margin-left: 40%;
+}
+
+.input-title-todo {
+  width: 257px;
+}
+
+.button-save-todo {
+  width: 130px;
+  height: 30px;
+  background-color: rgb(67, 185, 61);
+  border: none;
+  margin-left: 62px;
+  margin-top: 5px;
+}

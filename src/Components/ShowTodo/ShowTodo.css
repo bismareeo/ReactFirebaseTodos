@@ -32,6 +32,7 @@
   position: absolute;
   bottom: 12px;
   left: 35%;
+  border: none;
 }
 
 .button-change-state-to-do {
@@ -39,6 +40,8 @@
   width: 33%;
   height: 30px;
   margin-top: 70px;
+  border: none;
+
 }
 
 .button-change-state-doing {
@@ -46,6 +49,8 @@
   width: 33%;
   height: 30px;
   margin-top: 70px;
+  border: none;
+
 }
 
 .button-change-state-done {
@@ -53,4 +58,6 @@
   width: 33%;
   height: 30px;
   margin-top: 70px;
+  border: none;
+
 }

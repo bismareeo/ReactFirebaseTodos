@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './SaveTodo.css';
+
 export default class SaveTodo extends React.Component {
   onClearInputs = () => {
     this.refs.title.value = '';
@@ -17,17 +19,19 @@ export default class SaveTodo extends React.Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <div>
-          <div>
-            <label>Title</label>
-            <input type="text" ref='title' placeholder="Title..." />
-          </div>
-          <div>
-            <label>Description</label>
-            <input type="text" ref='description' placeholder="Description..." />
-          </div>
+        <div className="container-register-todo">
+            <p><strong>Title </strong></p>
+            <input
+              className="input-title-todo" 
+              type="text" 
+              ref='title' 
+              placeholder="Title..."/>
+            <p><strong>Description </strong> </p>
+            <textarea name="" id="" cols="30" rows="5" ref='description' placeholder="Description..." ></textarea>
+            <div>
+              <button className="button-save-todo" type="submit" >Save</button>
+            </div>
         </div>
-        <button type="submit" >Save</button>
       </form>
     );
   }
