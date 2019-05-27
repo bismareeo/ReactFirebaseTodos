@@ -104,6 +104,6 @@ export default class Todos extends React.Component {
           onUpdateTodo={this.changeTodo}
           onAddNewTodo={this.addNewTodo}/>
       </div>
-    );
+    )
   }
 }
