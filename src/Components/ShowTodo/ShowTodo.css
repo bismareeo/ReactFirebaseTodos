@@ -67,3 +67,14 @@
   left: 25%;
   border: none;
 }
+
+.button-add-to-do {
+  display: inline;
+  width: 40px;
+  height: 40px;
+  background-color: rgb(0, 133, 99);
+  margin-left: 10px;
+  border: none;
+  border-radius: 50%;
+  color: white;
+}

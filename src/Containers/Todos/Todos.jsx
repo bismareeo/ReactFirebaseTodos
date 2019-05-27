@@ -78,7 +78,14 @@ export default class Todos extends React.Component {
       status,
     });
     this.setState({
-      isShowSaveTodo: false
+      isShowSaveTodo: false,
+      todo: {}
+    });
+  }
+
+  addNewTodo = () => {
+    this.setState({
+      isShowSaveTodo: true,
     });
   }
 
@@ -87,12 +94,15 @@ export default class Todos extends React.Component {
     const { todo, todos } = this.state;
     return (
       <div>
-        {this.state.isShowSaveTodo ? <SaveTodo onSaveTodo={this.onSaveTodo} todo={todo} onUpdateTodo={this.updateTodo}/>: null}
+        {this.state.isShowSaveTodo 
+          ? <SaveTodo onSaveTodo={this.onSaveTodo} todo={todo} onUpdateTodo={this.updateTodo}/>
+          : null}
         <ShowTodo 
           todos={todos} 
           onDeleteTodo={this.deleteTodo} 
           onChangeStateTodo={this.changeStateTodo}
-          onUpdateTodo={this.changeTodo}/>
+          onUpdateTodo={this.changeTodo}
+          onAddNewTodo={this.addNewTodo}/>
       </div>
     );
   }

@@ -47,7 +47,9 @@ export default class ShowTodo extends React.Component {
     });
     return (
       <div className="container">
-        <h3 className="title-container">My Todo' List</h3>
+        <h3 className="title-container">My Todo' List  
+          <button className="button-add-to-do" onClick={this.props.onAddNewTodo}> + </button>
+        </h3>
         {showTodos}
       </div>
     );
