@@ -1,13 +1,20 @@
 import React from 'react';
+import Firebase from 'firebase';
 
 export default class SingIn extends React.Component {
   handleSingIn = event => {
     event.preventDefault();
     const email = this.refs.email.value;
     const password = this.refs.password.value;
-    this.props.onSingInWithEmail(email, password);
+    Firebase.auth().signInWithEmailAndPassword(email, password).then(result => {
+      console.log('successfully logged', result)
+    }).catch(function (error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // console.log(errorCode, errorMessage)
+    });
   }
-  
+
   render() {
     return (
       <div>

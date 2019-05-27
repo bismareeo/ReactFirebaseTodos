@@ -8,7 +8,6 @@ import ShowTodo from '../../Components/ShowTodo/ShowTodo';
 export default class Todos extends React.Component {
   constructor(props) {
     super(props);
-    Firebase.initializeApp(config);
     this.state = {
       todos: [],
       isShowSaveTodo: false,
@@ -88,7 +87,6 @@ export default class Todos extends React.Component {
       isShowSaveTodo: true,
     });
   }
-
 
   render() {
     const { todo, todos } = this.state;

@@ -1,41 +1,44 @@
 import React from 'react';
 import './App.css';
 import Firebase from 'firebase';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import {config} from './config';
 
 import Todos from './Containers/Todos/Todos';
 import SignIn from './Containers/SignIn/SignIn';
 import SignUp from './Containers/SignUp/SignUp';
 
-class App extends React.Component {
-  singInWithEmail = (email, password) => {
-    Firebase.auth().signInWithEmailAndPassword(email, password).then(result => {
-      console.log('successfully logged', result)
-    }).catch(function(error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // console.log(errorCode, errorMessage)
-    });
-  }
+const Home = () => <h2>this is my home</h2>
+Firebase.initializeApp(config);
+const App = () => (
+  <Router>
+    <div>
+      <Header />
+      <Route exact path="/" component={Home} />
+      <Route path="/todos" component={Todos} />
+      <Route path="/signin" component={SignIn} />
+      <Route path="/signup" component={SignUp} />
+    </div>
+  </Router>
+);
 
-  singUpWithEmail = (email, password) => {
-    Firebase.auth().createUserWithEmailAndPassword(email, password).then(result => {
-      console.log('successfully registered', result)
-    }).catch(function(error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // console.log(errorCode, errorMessage)
-    });
-  }
-
-  render() {
-    return (
-      <div>
-        <SignIn onSingInWithEmail={this.singInWithEmail}/>
-        <SignUp onSingUpWithEmail={this.singUpWithEmail}/>
-        <Todos />
-      </div>
-    )
-  }
-};
+const Header = () => (
+  <>
+  <ul>
+    <li>
+      <Link to="/">Home</Link>
+    </li>
+    <li>
+      <Link to="/todos">Todos</Link>
+    </li>
+    <li>
+      <Link to="/signin">SignIn</Link>
+    </li>
+    <li>
+      <Link to="/signup">SignUp</Link>
+    </li>
+  </ul>
+  </>
+);
 
 export default App;
