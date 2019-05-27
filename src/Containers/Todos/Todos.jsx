@@ -10,7 +10,9 @@ export default class Todos extends React.Component {
     super(props);
     Firebase.initializeApp(config);
     this.state = {
-      todos: []
+      todos: [],
+      isShowSaveTodo: false,
+      todo: {},
     };
   }
 
@@ -19,6 +21,9 @@ export default class Todos extends React.Component {
       title,
       description,
       status: 'to-do'
+    });
+    this.setState({
+      isShowSaveTodo: false,
     });
   }
 
@@ -58,11 +63,36 @@ export default class Todos extends React.Component {
     })
   }
 
+  changeTodo = (todo) => {
+    this.setState({
+      todo,
+      isShowSaveTodo: true
+    });
+  }
+
+  updateTodo = (key, title, description, status) => {
+    Firebase.database().ref('todos/'+key ).update({
+      key,
+      title,
+      description,
+      status,
+    });
+    this.setState({
+      isShowSaveTodo: false
+    });
+  }
+
+
   render() {
+    const { todo, todos } = this.state;
     return (
       <div>
-        <SaveTodo onSaveTodo={this.onSaveTodo}/>
-        <ShowTodo todos={this.state.todos} onDeleteTodo={this.deleteTodo} onChangeStateTodo={this.changeStateTodo}/>
+        {this.state.isShowSaveTodo ? <SaveTodo onSaveTodo={this.onSaveTodo} todo={todo} onUpdateTodo={this.updateTodo}/>: null}
+        <ShowTodo 
+          todos={todos} 
+          onDeleteTodo={this.deleteTodo} 
+          onChangeStateTodo={this.changeStateTodo}
+          onUpdateTodo={this.changeTodo}/>
       </div>
     );
   }

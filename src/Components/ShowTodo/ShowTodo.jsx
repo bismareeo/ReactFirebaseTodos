@@ -31,6 +31,11 @@ export default class ShowTodo extends React.Component {
             className="button-change-state-done"
             >Done
           </button>
+          <button
+            onClick={() => this.props.onUpdateTodo(todo)}
+            className="button-update-todos"
+            >Update
+          </button>
           <button 
             onClick={() => this.props.onDeleteTodo(todo.key)}
             className="button-delete-todo"
