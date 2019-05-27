@@ -1,11 +1,22 @@
 .todo-content {
-  background-color: rgb(248, 239, 215);
   margin: 10px;
   padding: 10px;
   float: left;
   width: 215px;
   height: 230px;
   position: relative;
+}
+
+.todo-content-to-do {
+  background-color: rgb(234, 236, 79);
+}
+
+.todo-content-doing {
+  background-color: rgb(106, 214, 187);
+}
+
+.todo-content-done {
+  background-color: rgb(236, 99, 99);
 }
 
 .container {
@@ -21,4 +32,25 @@
   position: absolute;
   bottom: 12px;
   left: 35%;
+}
+
+.button-change-state-to-do {
+  background-color: rgb(234, 236, 79);
+  width: 33%;
+  height: 30px;
+  margin-top: 70px;
+}
+
+.button-change-state-doing {
+  background-color: rgb(106, 214, 187);
+  width: 33%;
+  height: 30px;
+  margin-top: 70px;
+}
+
+.button-change-state-done {
+  background-color: rgb(236, 99, 99);
+  width: 33%;
+  height: 30px;
+  margin-top: 70px;
 }
