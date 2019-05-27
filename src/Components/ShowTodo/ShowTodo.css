@@ -5,14 +5,20 @@
   float: left;
   width: 215px;
   height: 230px;
+  position: relative;
 }
 
 .container {
   margin: 20px;
-
 }
 
 .title-container{
   text-align: center;
   color: rgb(66, 153, 153);
+}
+
+.button-delete-todo {
+  position: absolute;
+  bottom: 12px;
+  left: 35%;
 }

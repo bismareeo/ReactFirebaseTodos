@@ -19,7 +19,6 @@ export default class Todos extends React.Component {
       title,
       description,
     });
-
   }
 
   objectToArray = obj => {
@@ -45,11 +44,15 @@ export default class Todos extends React.Component {
     })
   }
 
+  deleteTodo = key => {
+    Firebase.database().ref('todos/'+key).remove();
+  }
+
   render() {
     return (
       <div>
         <SaveTodo onSaveTodo={this.onSaveTodo}/>
-        <ShowTodo todos={this.state.todos}/>
+        <ShowTodo todos={this.state.todos} onDeleteTodo={this.deleteTodo}/>
       </div>
     );
   }
