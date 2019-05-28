@@ -25,6 +25,7 @@ export default class SingUp extends React.Component {
             verificationMessage: 'Please verify sing up in your email',
             colorAlertMessage: 'green',
           });
+          Firebase.auth().signOut();
         }).catch(err => {
           console.log('error', err)
         })

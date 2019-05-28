@@ -15,12 +15,22 @@ export default class SingIn extends React.Component {
     event.preventDefault();
     const email = this.refs.email.value;
     const password = this.refs.password.value;
-    Firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
-      this.setState({
-        alertMessage: 'Successful Logged',
-        colorAlertMessage: 'green',
-        isLogged: true,
-      });
+    Firebase.auth().signInWithEmailAndPassword(email, password).then(result => {
+      if(result.user.emailVerified) {
+        this.setState({
+          alertMessage: 'Successful Logged',
+          colorAlertMessage: 'green',
+          isLogged: true,
+        });
+      } else {
+        this.setState({
+          alertMessage: 'Verify your email please',
+          colorAlertMessage: 'red',
+          isLogged: true,
+        });
+        Firebase.auth().signOut();
+      }
+
     }).catch(error => {
       var errorMessage = error.message;
       this.setState({
