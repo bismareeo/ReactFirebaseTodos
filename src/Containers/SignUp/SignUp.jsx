@@ -2,25 +2,49 @@ import React from 'react';
 import Firebase from 'firebase';
 
 export default class SingUp extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      alertMessage: '',
+      colorAlertMessage: '',
+      verificationMessage: '',
+      isRegistered: false,
+    }
+  }
+  
   handleSingUp = event => {
     event.preventDefault();
     const email = this.refs.email.value;
     const password = this.refs.password.value;
-    Firebase.auth().createUserWithEmailAndPassword(email, password).then(result => {
-      console.log('successfully logged')
-      result.sendEmailVerification();
-    }).catch(function (error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // console.log(errorCode, errorMessage)
-    });
+    const confirmPassword = this.refs.confirmPassword.value;
+    if (password === confirmPassword) {
+      Firebase.auth().createUserWithEmailAndPassword(email, password).then(result => {
+        const user = result.user;
+        user.sendEmailVerification().then(result => {
+          this.setState({
+            verificationMessage: 'Please verify sing up in your email',
+            colorAlertMessage: 'green',
+          });
+        }).catch(err => {
+          console.log('error')
+        })
+        this.setState({
+          alertMessage: 'Successful registered',
+          colorAlertMessage: 'green',
+          isRegistered: true,
+        })
+      }).catch(function (error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
 
-    const user = Firebase.auth().currentUser;
-    user.sendEmailVerification().then(result => {
-      console.log('enviado');
-    }).catch(err => {
-      console.log('error')
-    })
+      });
+    } else {
+      this.setState({
+        alertMessage: 'Wrong passwords',
+        colorAlertMessage: 'red',
+        isRegistered: true,
+      });
+    }
   }
 
   render() {
@@ -32,8 +56,11 @@ export default class SingUp extends React.Component {
           <input type="text" ref='email' />
           <p>Password</p>
           <input type="password" ref='password' />
-          <p>Re write your password</p>
-          <input type="password" ref='password' />
+          <p>Confirm your password</p>
+          <input type="password" ref='confirmPassword' />
+          {
+            this.state.isRegistered ? <h3 style={{color: this.state.colorAlertMessage}}>{this.state.alertMessage}, {this.state.verificationMessage} </h3> : null
+          }
           <div>
             <button type='submit'>Sing In</button>
           </div>
