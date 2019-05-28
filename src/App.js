@@ -35,9 +35,7 @@ class App extends React.Component {
   }
 
   handleLogout = () => {
-    Firebase.auth().signOut().then(result => {
-      console.log('logout ')
-    })
+    Firebase.auth().signOut();
   }
 
   render () {
