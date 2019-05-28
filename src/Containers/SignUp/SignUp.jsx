@@ -20,23 +20,25 @@ export default class SingUp extends React.Component {
     if (password === confirmPassword) {
       Firebase.auth().createUserWithEmailAndPassword(email, password).then(result => {
         const user = result.user;
-        user.sendEmailVerification().then(result => {
+        user.sendEmailVerification().then(() => {
           this.setState({
             verificationMessage: 'Please verify sing up in your email',
             colorAlertMessage: 'green',
           });
         }).catch(err => {
-          console.log('error')
+          console.log('error', err)
         })
         this.setState({
           alertMessage: 'Successful registered',
           colorAlertMessage: 'green',
           isRegistered: true,
         })
-      }).catch(function (error) {
-        var errorCode = error.code;
+      }).catch(error => {
         var errorMessage = error.message;
-
+        this.setState({
+          alertMessage: errorMessage,
+          colorAlertMessage: 'red',
+        });
       });
     } else {
       this.setState({
@@ -59,7 +61,9 @@ export default class SingUp extends React.Component {
           <p>Confirm your password</p>
           <input type="password" ref='confirmPassword' />
           {
-            this.state.isRegistered ? <h3 style={{color: this.state.colorAlertMessage}}>{this.state.alertMessage}, {this.state.verificationMessage} </h3> : null
+            this.state.isRegistered 
+              ? <h3 style={{color: this.state.colorAlertMessage}}>{this.state.alertMessage}, {this.state.verificationMessage} </h3> 
+              : null
           }
           <div>
             <button type='submit'>Sing In</button>

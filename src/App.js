@@ -1,59 +1,59 @@
 import React from 'react';
 import './App.css';
 import Firebase from 'firebase';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import {config} from './config';
 
 import Todos from './Containers/Todos/Todos';
 import SignIn from './Containers/SignIn/SignIn';
 import SignUp from './Containers/SignUp/SignUp';
-Firebase.initializeApp(config);
-// const user = Firebase.auth().currentUser;
-// console.log(user);
+import Header from './Components/Header/Header';
+import Home from './Containers/Home/Home';
 
-class Home extends React.Component {
-  render() {
-    // const user = Firebase.auth().currentUser;
-    // user ?
-    //   console.log('hola', user.email, user.emailVerified) : console.log('no hay user');
+Firebase.initializeApp(config);
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state ={
+      isUserLogged: Firebase.auth().currentUser,
+    };
+  }
+
+  componentDidMount() {
+    Firebase.auth().onAuthStateChanged(user=>{
+      if(user) {
+        this.setState({
+          isUserLogged: true,
+        })
+      } else {
+        this.setState({
+          isUserLogged:false,
+        })
+      }
+    }) ;
+  }
+
+  handleLogout = () => {
+    Firebase.auth().signOut().then(result => {
+      console.log('logout ')
+    })
+  }
+
+  render () {
     return (
-      <p>hola</p>
-    );
+      <Router>
+        <div>
+          <Header />
+          {this.state.isUserLogged ? <button onClick={this.handleLogout}>Logout</button>: null }
+          <Route exact path="/" component={Home} />
+          <Route path="/todos" component={Todos} />
+          <Route path="/signin" component={SignIn} />
+          <Route path="/signup" component={SignUp} />
+        </div>
+      </Router>
+    )
   }
 }
-
-const user = Firebase.auth().currentUser;
-
-const App = () => (
-  <Router>
-    <div>
-      <Header />
-      <Route exact path="/" component={Home} />
-      <Route path="/todos" component={Todos} />
-      <Route path="/signin" component={SignIn} />
-      <Route path="/signup" component={SignUp} />
-      {user && user.emailVerified ? <button>Sign out</button>: null}
-    </div>
-  </Router>
-);
-
-const Header = () => (
-  <>
-  <ul>
-    <li>
-      <Link to="/">Home</Link>
-    </li>
-    <li>
-      <Link to="/todos">Todos</Link>
-    </li>
-    <li>
-      <Link to="/signin">SignIn</Link>
-    </li>
-    <li>
-      <Link to="/signup">SignUp</Link>
-    </li>
-  </ul>
-  </>
-);
 
 export default App;

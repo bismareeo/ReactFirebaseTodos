@@ -2,16 +2,32 @@ import React from 'react';
 import Firebase from 'firebase';
 
 export default class SingIn extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      alertMessage: '',
+      colorAlertMessage: '',
+      isLogged: false,
+    }
+  }
+
   handleSingIn = event => {
     event.preventDefault();
     const email = this.refs.email.value;
     const password = this.refs.password.value;
-    Firebase.auth().signInWithEmailAndPassword(email, password).then(result => {
-      console.log('successfully logged', result)
-    }).catch(function (error) {
-      var errorCode = error.code;
+    Firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
+      this.setState({
+        alertMessage: 'Successful Logged',
+        colorAlertMessage: 'green',
+        isLogged: true,
+      });
+    }).catch(error => {
       var errorMessage = error.message;
-      // console.log(errorCode, errorMessage)
+      this.setState({
+        alertMessage: errorMessage,
+        colorAlertMessage: 'red',
+        isLogged: true,
+      })
     });
   }
 
@@ -24,6 +40,11 @@ export default class SingIn extends React.Component {
           <input type="text" ref='email' />
           <p>Password</p>
           <input type="password" ref='password' />
+          {
+            this.state.isLogged 
+              ? <h3 style={{ color: this.state.colorAlertMessage }}>{this.state.alertMessage} </h3> 
+              : null
+          }
           <div>
             <button type='submit'>Sing In</button>
           </div>

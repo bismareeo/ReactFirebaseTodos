@@ -1,6 +1,5 @@
 import React from 'react';
 import Firebase from 'firebase';
-import { config } from '../../config';
 
 import SaveTodo from '../../Components/SaveTodo/SaveTodo';
 import ShowTodo from '../../Components/ShowTodo/ShowTodo';
