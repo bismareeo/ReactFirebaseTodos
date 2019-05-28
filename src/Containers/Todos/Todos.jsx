@@ -1,6 +1,5 @@
 import React from 'react';
 import Firebase from 'firebase';
-import { config } from '../../config';
 
 import SaveTodo from '../../Components/SaveTodo/SaveTodo';
 import ShowTodo from '../../Components/ShowTodo/ShowTodo';
@@ -8,7 +7,6 @@ import ShowTodo from '../../Components/ShowTodo/ShowTodo';
 export default class Todos extends React.Component {
   constructor(props) {
     super(props);
-    Firebase.initializeApp(config);
     this.state = {
       todos: [],
       isShowSaveTodo: false,
@@ -20,7 +18,8 @@ export default class Todos extends React.Component {
     Firebase.database().ref('todos').push({
       title,
       description,
-      status: 'to-do'
+      status: 'to-do',
+      commentKey: false,
     });
     this.setState({
       isShowSaveTodo: false,
@@ -35,6 +34,7 @@ export default class Todos extends React.Component {
         title: obj[key].title,
         description: obj[key].description,
         status: obj[key].status,
+        commentKey: obj[key].commentKey,
       };
       arr.push(newObj);
     }
@@ -89,6 +89,38 @@ export default class Todos extends React.Component {
     });
   }
 
+  saveComment = (todo, comment) => {
+    const user = Firebase.auth().currentUser;
+    const { email } = user;
+    const { key, title, description, status, commentKey } = todo;
+    if (commentKey) {
+      Firebase.database().ref('/comments/'+commentKey).once('value').then(result => {
+        const { content } = result.val();
+        const newComment = {
+          comment,
+          email,
+        };
+        content.push(newComment);
+        Firebase.database().ref('comments/'+commentKey).set({
+          content
+        })
+      });
+
+    } else {
+      const commentRegistered = Firebase.database().ref('comments').push({
+        content: [
+          { comment, email, }
+        ],
+      });
+      const commentKey = commentRegistered.key;
+      Firebase.database().ref('todos/'+key ).set({
+        title,
+        description,
+        status,
+        commentKey,
+      });
+    }
+  }
 
   render() {
     const { todo, todos } = this.state;
@@ -102,8 +134,9 @@ export default class Todos extends React.Component {
           onDeleteTodo={this.deleteTodo} 
           onChangeStateTodo={this.changeStateTodo}
           onUpdateTodo={this.changeTodo}
-          onAddNewTodo={this.addNewTodo}/>
+          onAddNewTodo={this.addNewTodo}
+          onSaveComment={this.saveComment}/>
       </div>
-    );
+    )
   }
 }

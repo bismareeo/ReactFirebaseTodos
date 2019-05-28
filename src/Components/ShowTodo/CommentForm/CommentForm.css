@@ -1,0 +1,23 @@
+.container-commentForm {
+  background-color: beige;
+  width: 280px;
+  height: 150px;
+  margin: 0px;
+  padding: 0px;
+  overflow: scroll
+}
+
+.show-content-comments {
+  margin-top: 0px;
+  padding: 0px;
+}
+
+.content{
+  font-size: 12px;
+}
+
+.title-comment {
+  text-align: center;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}

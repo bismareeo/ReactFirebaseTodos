@@ -1,9 +1,11 @@
 import React from 'react';
+
+import CommentForm from './CommentForm/CommentForm';
 import './ShowTodo.css';
 
 export default class ShowTodo extends React.Component {
   render() {
-    const todos = this.props.todos;
+    const {todos} = this.props;
     const stateTodo = {
       todo: 'to-do',
       doing: 'doing',
@@ -31,6 +33,7 @@ export default class ShowTodo extends React.Component {
             className="button-change-state-done"
             >Done
           </button>
+          <CommentForm todo={todo} onSaveComment={this.props.onSaveComment}/>
           <button
             onClick={() => this.props.onUpdateTodo(todo)}
             className="button-update-todos"
@@ -39,8 +42,7 @@ export default class ShowTodo extends React.Component {
           <button 
             onClick={() => this.props.onDeleteTodo(todo.key)}
             className="button-delete-todo"
-            >
-            Delete
+            >Delete
           </button>
         </div>
       )
