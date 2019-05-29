@@ -7,7 +7,7 @@ export default class CommentForm extends React.Component {
   constructor(props) {
     super(props);
     this.state ={
-      comments: []
+      comments: [],
     }
   }
 
@@ -17,24 +17,17 @@ export default class CommentForm extends React.Component {
     this.props.onSaveComment(todo, comment);
   }
 
-  async getComments(commentKey) {
-    if(commentKey) {
-      const comments = await Firebase.database().ref('/comments/'+commentKey).once('value', result => {
-        const { content } = result.val();
-        return content;
-      });
-      return comments.val().content;
-    } else {
-      return [];
-    }
-  }
-
-  async componentDidMount() {
+  componentDidMount() {
+    console.log('hola')
     const {commentKey} = this.props.todo;
-    const comments = await this.getComments(commentKey);
-    this.setState({
-      comments,
-    })
+    if(commentKey) {
+      Firebase.database().ref('/comments/'+commentKey).on('value', result => {
+        const { content } = result.val();
+        this.setState({
+          comments: content
+        });
+      });
+    }
   }
 
   render() {
@@ -46,7 +39,6 @@ export default class CommentForm extends React.Component {
         </div>
       )
     });
-
     return (
       <div>
         <h5 className="title-comment">Comments</h5>
