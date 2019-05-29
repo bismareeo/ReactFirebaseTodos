@@ -105,7 +105,6 @@ export default class Todos extends React.Component {
           content
         })
       });
-
     } else {
       const commentRegistered = Firebase.database().ref('comments').push({
         content: [
@@ -120,6 +119,9 @@ export default class Todos extends React.Component {
         commentKey,
       });
     }
+    this.setState({
+      updatedComments: true
+    })
   }
 
   render() {
