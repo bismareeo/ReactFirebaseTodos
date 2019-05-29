@@ -10,20 +10,20 @@ export default class Header extends React.Component {
     }
   }
   componentDidMount() {
-    Firebase.auth().onAuthStateChanged(user=>{
-      if(user) {
+    Firebase.auth().onAuthStateChanged(user => {
+      if (user) {
         this.setState({
           isUserLogged: true,
         })
       } else {
         this.setState({
-          isUserLogged:false,
+          isUserLogged: false,
         })
       }
-    }) ;
+    });
   }
   render() {
-    const {isUserLogged} = this.state;
+    const { isUserLogged } = this.state;
     return (
       <>
         <ul>
@@ -31,25 +31,22 @@ export default class Header extends React.Component {
             <Link to="/">Home</Link>
           </li>
           {
-            isUserLogged 
+            isUserLogged
               ? <li>
-                  <Link to="/todos">Todos</Link>
-                </li>
-              : null 
-          }          
-          {
-            !isUserLogged 
-              ? <li>
-                  <Link to="/signin">Sign In</Link>
-                </li> 
+                <Link to="/todos">Todos</Link>
+              </li>
               : null
           }
           {
-            !isUserLogged 
-              ? <li>
-                  <Link to="/signup">Sign Up</Link>
-                </li> 
-              : null
+            !isUserLogged &&
+            <>
+              <li>
+                <Link to="/signin">Sign In</Link>
+              </li>
+              < li >
+                <Link to="/signup">Sign Up</Link>
+              </li>
+            </>
           }
         </ul>
       </>

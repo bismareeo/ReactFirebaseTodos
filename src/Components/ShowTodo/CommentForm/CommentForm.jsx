@@ -11,30 +11,45 @@ export default class CommentForm extends React.Component {
     }
   }
 
+  onClearInput = () => {
+    this.refs.comment.value = '';
+  }
+
   onSaveComment = () => {
     const comment = this.refs.comment.value;
     const {todo} = this.props;
     this.props.onSaveComment(todo, comment);
+    this.onClearInput();
+  }
+
+  objectToArray = obj => {
+    const arr = [];
+    for (let key in obj) {
+      const newObj = {
+        key,
+        comment: obj[key].comment,
+        email: obj[key].email,
+      };
+      arr.push(newObj);
+    }
+    return arr;
   }
 
   componentDidMount() {
-    console.log('hola')
-    const {commentKey} = this.props.todo;
-    if(commentKey) {
-      Firebase.database().ref('/comments/'+commentKey).on('value', result => {
-        const { content } = result.val();
+    const {key} = this.props.todo;
+      Firebase.database().ref('/comments/'+key).on('value', result => {
+        const arrComments = this.objectToArray(result.val());
         this.setState({
-          comments: content
+          comments: arrComments
         });
       });
-    }
   }
 
   render() {
     const {comments} = this.state;
-    const showComments = comments.map((comment, index) => {
+    const showComments = comments.map(comment => {
       return (
-        <div key={index+comment.email} className='show-content-comments'>
+        <div key={comment.key} className='show-content-comments'>
           <p className='content'><strong>{comment.email}: </strong> {comment.comment}</p>
         </div>
       )

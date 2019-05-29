@@ -19,7 +19,6 @@ export default class Todos extends React.Component {
       title,
       description,
       status: 'to-do',
-      commentKey: false,
     });
     this.setState({
       isShowSaveTodo: false,
@@ -28,13 +27,12 @@ export default class Todos extends React.Component {
 
   objectToArray = obj => {
     const arr = [];
-    for(let key in obj) {
+    for (let key in obj) {
       const newObj = {
         key,
         title: obj[key].title,
         description: obj[key].description,
         status: obj[key].status,
-        commentKey: obj[key].commentKey,
       };
       arr.push(newObj);
     }
@@ -54,12 +52,12 @@ export default class Todos extends React.Component {
   }
 
   deleteTodo = key => {
-    Firebase.database().ref('todos/'+key).remove();
+    Firebase.database().ref('todos/' + key).remove();
   }
 
   changeStateTodo = (key, status) => {
-    Firebase.database().ref('todos/'+key).update({
-      status 
+    Firebase.database().ref('todos/' + key).update({
+      status
     })
   }
 
@@ -71,7 +69,7 @@ export default class Todos extends React.Component {
   }
 
   updateTodo = (key, title, description, status) => {
-    Firebase.database().ref('todos/'+key ).update({
+    Firebase.database().ref('todos/' + key).update({
       key,
       title,
       description,
@@ -92,52 +90,29 @@ export default class Todos extends React.Component {
   saveComment = (todo, comment) => {
     const user = Firebase.auth().currentUser;
     const { email } = user;
-    const { key, title, description, status, commentKey } = todo;
-    if (commentKey) {
-      Firebase.database().ref('/comments/'+commentKey).once('value').then(result => {
-        const { content } = result.val();
-        const newComment = {
-          comment,
-          email,
-        };
-        content.push(newComment);
-        Firebase.database().ref('comments/'+commentKey).set({
-          content
-        })
+    const { key } = todo;
+
+    Firebase.database().ref('/comments/' + key).once('value').then(() => {
+      Firebase.database().ref('comments/' + key).push({
+        comment, email,
       });
-    } else {
-      const commentRegistered = Firebase.database().ref('comments').push({
-        content: [
-          { comment, email, }
-        ],
-      });
-      const commentKey = commentRegistered.key;
-      Firebase.database().ref('todos/'+key ).set({
-        title,
-        description,
-        status,
-        commentKey,
-      });
-    }
-    this.setState({
-      updatedComments: true
-    })
+    });
   }
 
   render() {
     const { todo, todos } = this.state;
     return (
       <div>
-        {this.state.isShowSaveTodo 
-          ? <SaveTodo onSaveTodo={this.onSaveTodo} todo={todo} onUpdateTodo={this.updateTodo}/>
+        {this.state.isShowSaveTodo
+          ? <SaveTodo onSaveTodo={this.onSaveTodo} todo={todo} onUpdateTodo={this.updateTodo} />
           : null}
-        <ShowTodo 
-          todos={todos} 
-          onDeleteTodo={this.deleteTodo} 
+        <ShowTodo
+          todos={todos}
+          onDeleteTodo={this.deleteTodo}
           onChangeStateTodo={this.changeStateTodo}
           onUpdateTodo={this.changeTodo}
           onAddNewTodo={this.addNewTodo}
-          onSaveComment={this.saveComment}/>
+          onSaveComment={this.saveComment} />
       </div>
     )
   }
