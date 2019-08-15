@@ -36,11 +36,35 @@ exports.getUsers = functions.https.onRequest(async (req, res) => {
   });
 });
 
-exports.listenComments = functions.database.ref('comments').onWrite((snapshot, context) => {
-  console.log('created')
+exports.listenTodos = functions.database.ref('todos').onWrite((snapshot, context) => {
+  const email = context.auth.token.email;
+  const result = snapshot.after.val();
+  let lastValue = {};
+  for (const prop in result) {
+    lastValue = {id: prop, value: result[prop]}
+  }
+  admin.database().ref('replicateTodos').child(lastValue.id).set({description: lastValue.value.description , status: lastValue.value.status , title: lastValue.value.title, email: email })
 })
 
+exports.updatingTodos = functions.database.ref('todos').onUpdate((snapshot, context) => {
+  console.log('snapshot', snapshot)
+  console.log('context', context)
 
+   
+})
+
+exports.deletingTodos = functions.database.ref('todos').onDelete((snapshot, context) => {
+  console.log('deleting', snapshot)
+  console.log('deleting', context)
+
+  const email = context.auth.token.email;
+  const result = snapshot.after.val();
+  let lastValue = {};
+  for (const prop in result) {
+    lastValue = {id: prop, value: result[prop]}
+  }
+  admin.database().ref('replicateTodos').child(lastValue.id).set({description: lastValue.value.description , status: lastValue.value.status , title: lastValue.value.title, email: email })
+})
 // exports.myFunction = functions.firestore.document('comments').onWrite((change, context) => {
 //   console.log('calling me')
 // })

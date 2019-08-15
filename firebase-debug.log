@@ -1,0 +1,33 @@
+[debug] [2019-08-15T04:53:38.338Z] ----------------------------------------------------------------------
+[debug] [2019-08-15T04:53:38.340Z] Command:       /home/bismar/.nvm/versions/node/v8.13.0/bin/node /home/bismar/.nvm/versions/node/v8.13.0/bin/firebase serve --only functions
+[debug] [2019-08-15T04:53:38.340Z] CLI Version:   7.2.2
+[debug] [2019-08-15T04:53:38.340Z] Platform:      linux
+[debug] [2019-08-15T04:53:38.340Z] Node Version:  v8.13.0
+[debug] [2019-08-15T04:53:38.340Z] Time:          Thu Aug 15 2019 00:53:38 GMT-0400 (-04)
+[debug] [2019-08-15T04:53:38.340Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-08-15T04:53:38.345Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-08-15T04:53:38.345Z] > authorizing via signed-in user
+[debug] [2019-08-15T04:53:38.345Z] [iam] checking project myfirstproject-13415 for permissions ["firebase.projects.get"]
+[debug] [2019-08-15T04:53:38.346Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/myfirstproject-13415:testIamPermissions  
+
+[debug] [2019-08-15T04:53:39.324Z] <<< HTTP RESPONSE 200
+[debug] [2019-08-15T04:53:39.326Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/myfirstproject-13415  
+ 
+[debug] [2019-08-15T04:53:40.603Z] <<< HTTP RESPONSE 200
+[info] ✔  functions: Using node@8 from host.
+[debug] [2019-08-15T04:53:40.621Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/myfirstproject-13415/adminSdkConfig  
+ 
+[debug] [2019-08-15T04:53:41.799Z] <<< HTTP RESPONSE 200
+[info] ✔  functions: Emulator started at http://localhost:5000
+[info] i  functions: Watching "/home/bismar/Documents/Proyectos/github/ReactFirebaseTodos/functions" for Cloud Functions...
+[debug] [2019-08-15T04:53:42.272Z] [runtime-status] Functions runtime initialized. {"cwd":"/home/bismar/Documents/Proyectos/github/ReactFirebaseTodos/functions","node_version":"8.13.0"}
+[debug] [2019-08-15T04:53:42.272Z] [runtime-status] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true} {}
+[debug] [2019-08-15T04:53:42.273Z] [runtime-status] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.3.0","resolution":"/home/bismar/Documents/Proyectos/github/ReactFirebaseTodos/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2019-08-15T04:53:42.274Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"/home/bismar/Documents/Proyectos/github/ReactFirebaseTodos/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2019-08-15T04:53:42.274Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"/home/bismar/Documents/Proyectos/github/ReactFirebaseTodos/functions/node_modules/firebase-functions/lib/index.js"}
+[info] ✔  functions[addMessage]: http function initialized (http://localhost:5000/myfirstproject-13415/us-central1/addMessage).
+[info] ✔  functions[getUsers]: http function initialized (http://localhost:5000/myfirstproject-13415/us-central1/getUsers).
+[info] i  functions[listenTodos]: function ignored because the database emulator does not exist or is not running.
+[info] i  functions[updatingTodos]: function ignored because the database emulator does not exist or is not running.
+[info] i  functions[deletingTodos]: function ignored because the database emulator does not exist or is not running.
